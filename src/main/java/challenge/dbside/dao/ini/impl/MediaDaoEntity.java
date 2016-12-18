@@ -9,6 +9,7 @@ import javax.persistence.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import challenge.dbside.dao.ini.MediaDao;
+import challenge.dbside.models.ChallengeDefinition;
 
 @Repository
 public class MediaDaoEntity<E extends BaseEntity> implements MediaDao<E> {
@@ -53,7 +54,10 @@ public class MediaDaoEntity<E extends BaseEntity> implements MediaDao<E> {
 
     @Override
     public E findById(Integer id, Class<E> classType) {
-        return classType.cast(em.find(classType, id));
+        TypedQuery<BaseEntity> query = em.createQuery(
+                                    "SELECT c FROM BaseEntity c"
+                                    +" WHERE c.id = ?1", BaseEntity.class);
+        return classType.cast(query.setParameter(1, id).getSingleResult());
     } 
 }
 

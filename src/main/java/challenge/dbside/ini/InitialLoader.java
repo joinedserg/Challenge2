@@ -6,10 +6,6 @@ import challenge.dbside.models.ChallengeDefinition;
 import challenge.dbside.models.ChallengeInstance;
 import challenge.dbside.models.ini.TypeOfAttribute;
 import challenge.dbside.models.ini.TypeOfEntity;
-import challenge.dbside.services.ini.impl.MediaServiceTypeOfAttribute;
-import challenge.dbside.services.ini.impl.MediaServiceTypeOfEntity;
-import challenge.dbside.services.ini.impl.MediaServiceEntity;
-import com.google.common.io.BaseEncoding;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,9 +148,9 @@ public class InitialLoader {
         userSet.add(user1);
         userSet.add(user4);
         user2.setChildren(userSet);
+        user1.setParent(user2);
+        user4.setParent(user2); 
         serviceEntityInit.update(user2);
-
-        serviceEntityInit.update(user4);
         for (BaseEntity obj : chal2.getChildren()) {
             System.out.println(((ChallengeInstance) obj).getAcceptor().getName());
         }
