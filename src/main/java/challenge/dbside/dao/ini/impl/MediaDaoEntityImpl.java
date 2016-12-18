@@ -37,7 +37,7 @@ public class MediaDaoEntityImpl implements MediaDaoEntity {
     	
     	entity.setId(getNextId());
     	System.out.println("Save id: " + entity.getId());
-        em.persist(entity);
+        em.merge(entity);
     }
 
     public<T extends BaseEntity> List<T> getAll(Class classType) { 
