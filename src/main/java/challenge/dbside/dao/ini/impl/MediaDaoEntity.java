@@ -32,7 +32,7 @@ public class MediaDaoEntity<E extends BaseEntity> implements MediaDao<E> {
 
     public void save(BaseEntity entity) {   	
     	entity.setId(getNextId());
-    	em.persist(entity);
+    	em.merge(entity);
     }
 
     @Override
