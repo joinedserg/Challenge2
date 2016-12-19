@@ -1,9 +1,11 @@
 package challenge.dbside.models;
 
 import challenge.dbside.ini.ContextType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +16,10 @@ public class ChallengeInstance extends BaseEntity {
         super(ChallengeInstance.class.getSimpleName());
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade=CascadeType.ALL) 
+    @JoinTable(name="relationship", 
+            joinColumns={@JoinColumn(name ="entity_id2", referencedColumnName="entity_id")},
+            inverseJoinColumns={@JoinColumn(name ="entity_id1", referencedColumnName="entity_id")})
     private User acceptor;
 
     public String getName() {

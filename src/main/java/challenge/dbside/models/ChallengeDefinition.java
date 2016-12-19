@@ -7,15 +7,21 @@ import challenge.dbside.ini.ContextType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 
 @Entity
 @Table(name = "entities")
 //@DiscriminatorValue(value="Chal")
 public class ChallengeDefinition extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "relationship", 
+            joinColumns = @JoinColumn(name = "entity_id2", referencedColumnName = "entity_id"),
+            inverseJoinColumns = @JoinColumn(name = "entity_id1", referencedColumnName = "entity_id")
+    )
     private User creator;
 
     public ChallengeDefinition() {
