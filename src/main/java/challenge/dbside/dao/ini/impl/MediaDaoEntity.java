@@ -20,7 +20,6 @@ public class MediaDaoEntity<E extends BaseEntity> implements MediaDao<E> {
     private PlatformTransactionManager transactionManager;
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
-        //this.transactionManager = transactionManager;
     }
     
     public Integer getNextId() {
@@ -33,7 +32,8 @@ public class MediaDaoEntity<E extends BaseEntity> implements MediaDao<E> {
 
     public void save(BaseEntity entity) {   	
     	entity.setId(getNextId());
-    	em.merge(entity);
+    	em.persist(entity);
+       
     }
 
     @Override
@@ -50,6 +50,7 @@ public class MediaDaoEntity<E extends BaseEntity> implements MediaDao<E> {
     @Override
     public void update(BaseEntity entity) {
         em.merge(entity);
+        
     }
 
     @Override

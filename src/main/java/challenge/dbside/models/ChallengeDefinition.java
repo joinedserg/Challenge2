@@ -7,19 +7,23 @@ import challenge.dbside.ini.ContextType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name = "entities")
 //@DiscriminatorValue(value="Chal")
 public class ChallengeDefinition extends BaseEntity {
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User creator;
+
     public ChallengeDefinition() {
         super(ChallengeDefinition.class.getSimpleName());
     }
-    
-    public List<User> getAllAcceptors()
-    {
-        List<User> acceptors=new ArrayList<>();
+
+    public List<User> getAllAcceptors() {
+        List<User> acceptors = new ArrayList<>();
         this.getChildren().forEach((chalInstance) -> {
             acceptors.add(((ChallengeInstance) chalInstance).getAcceptor());
         });
@@ -47,7 +51,7 @@ public class ChallengeDefinition extends BaseEntity {
     }
 
     public String getImageRef() {
-        return "images/"+this.getAttributes()
+        return "images/" + this.getAttributes()
                 .get(ContextType.getInstance().getTypeAttribute("imageref").getId()).getValue();
     }
 
@@ -64,5 +68,13 @@ public class ChallengeDefinition extends BaseEntity {
     public void setDate(Date date) {
         this.getAttributes()
                 .get(ContextType.getInstance().getTypeAttribute("date").getId()).setValue(date.toString());
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+     public void setCreator(User creator) {
+        this.creator = creator;
     }
 }

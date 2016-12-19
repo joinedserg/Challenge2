@@ -1,6 +1,8 @@
 package challenge.webside.controllers.util;
 
 import challenge.dbside.models.ChallengeDefinition;
+import challenge.dbside.models.ChallengeInstance;
+import challenge.dbside.models.User;
 import challenge.webside.dao.UsersDao;
 import challenge.webside.model.UserConnection;
 import challenge.webside.model.UserProfile;
@@ -134,7 +136,6 @@ public class SocialControllerUtil {
             // Compile the best display name from the connection and the profile
             displayName = getDisplayName(connection, profile);
 
-          
         }
 
         Throwable exception = (Throwable) session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
@@ -146,8 +147,8 @@ public class SocialControllerUtil {
         model.addAttribute("currentUserConnection", connection);
         model.addAttribute("currentUserDisplayName", displayName);
         model.addAttribute("currentData", data);
-        model.addAttribute("challenge", (ChallengeDefinition)serviceEntity.findById(new Integer(id), ChallengeDefinition.class));
-        model.addAttribute("listOfAcceptors", ((ChallengeDefinition)serviceEntity.findById(id, ChallengeDefinition.class)).getAllAcceptors());
+        model.addAttribute("challenge", (ChallengeDefinition) serviceEntity.findById(new Integer(id), ChallengeDefinition.class));
+        model.addAttribute("listOfAcceptors", ((ChallengeDefinition) serviceEntity.findById(id, ChallengeDefinition.class)).getAllAcceptors());
     }
 
     /**
@@ -202,5 +203,45 @@ public class SocialControllerUtil {
         } else {
             return profile.getName();
         }
+    }
+
+    public void setProfileShow(int userDBId, HttpServletRequest request, Principal currentUser, Model model) {
+        String userId = currentUser == null ? null : currentUser.getName();
+        String path = request.getRequestURI();
+        HttpSession session = request.getSession();
+
+        User userWhichProfileRequested = (User)serviceEntity.findById(userDBId, User.class);
+        UserConnection connection = null;
+        UserProfile profile = null;
+        String displayName = null;
+        String data = null;
+
+        // Collect info if the user is logged in, i.e. userId is set
+        if (userId != null) {
+
+            // Get the current UserConnection from the http session
+            connection = getUserConnection(session, userId);
+            // Get the current UserProfile from the http session
+            profile = getUserProfile(session, userId);
+            // Compile the best display name from the connection and the profile
+            displayName = getDisplayName(connection, profile);
+
+        }
+
+        Throwable exception = (Throwable) session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+
+        // Update the model with the information we collected
+        model.addAttribute("exception", exception == null ? null : exception.getMessage());
+        model.addAttribute("currentUserId", userId);
+        model.addAttribute("currentUserProfile", profile);
+        model.addAttribute("currentUserConnection", connection);
+        model.addAttribute("currentUserDisplayName", displayName);
+        model.addAttribute("currentData", data);
+        model.addAttribute("listOfDefined", userWhichProfileRequested.getChallenges());
+        model.addAttribute("listOfAccepted", userWhichProfileRequested.getAcceptedChallenges());
+        System.out.println("HuiNana");
+        userWhichProfileRequested.getAcceptedChallenges().forEach((c) -> {
+            System.out.println(((ChallengeInstance) c).getName());
+        });
     }
 }

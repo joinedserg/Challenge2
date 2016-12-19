@@ -1,5 +1,6 @@
 package challenge.webside.controllers;
 
+import challenge.dbside.models.User;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.util.MultiValueMap;
@@ -44,6 +45,11 @@ public class MainController {
     public String show(HttpServletRequest request, Principal currentUser, Model model,@RequestParam("id") int id) {
         util.setChallengeShow(id,request, currentUser, model);
         return "chalShow";
+    }
+    @RequestMapping(value = "/profile", method = GET, produces = "text/plain;charset=UTF-8")
+    public String showProfile(HttpServletRequest request, Principal currentUser, Model model,@RequestParam("id") int userId) {
+        util.setProfileShow(userId,request, currentUser, model);
+        return "profile";
     }
 
     @RequestMapping("/login")

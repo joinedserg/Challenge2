@@ -1,7 +1,6 @@
 package challenge.dbside.models;
 
 import challenge.dbside.ini.ContextType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -15,7 +14,7 @@ public class ChallengeInstance extends BaseEntity {
         super(ChallengeInstance.class.getSimpleName());
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User acceptor;
 
     public String getName() {

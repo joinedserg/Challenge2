@@ -20,23 +20,23 @@ public class User extends BaseEntity {
         friends = new ArrayList<>();
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "relationship",
             joinColumns = @JoinColumn(name = "entity_id1", referencedColumnName = "entity_id"),
             inverseJoinColumns = @JoinColumn(name = "entity_id2", referencedColumnName = "entity_id")
-    )
+   )
     @Where(clause = "type_of_entity = 2")
     private List<ChallengeDefinition> listOfChallenges;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "relationship",
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "relationship", 
             joinColumns = @JoinColumn(name = "entity_id1", referencedColumnName = "entity_id"),
             inverseJoinColumns = @JoinColumn(name = "entity_id2", referencedColumnName = "entity_id")
     )
     @Where(clause = "type_of_entity = 3")
     private List<ChallengeInstance> listOfAcceptedChallenges;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "relationship",
             joinColumns = @JoinColumn(name = "entity_id1", referencedColumnName = "entity_id"),
             inverseJoinColumns = @JoinColumn(name = "entity_id2", referencedColumnName = "entity_id")
@@ -59,12 +59,12 @@ public class User extends BaseEntity {
     }
 
     public void addChallenge(ChallengeDefinition chal) {
-
+        //chal.setCreator(this);
         listOfChallenges.add(chal);
     }
 
     public void addAcceptedChallenge(ChallengeInstance chal) {
-        chal.setAcceptor(this);
+       // chal.setAcceptor(this);
         listOfAcceptedChallenges.add(chal);
     }
 
