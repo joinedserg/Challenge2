@@ -78,8 +78,9 @@ public class UsersDao {
         serviceEntity.save(chalDef1);
         User user = new User();
         serviceEntity.save(user);
+        
+        
         user.addChallenge(chalDef1);
-
         serviceEntity.update(user);
 
         ChallengeInstance chalInstance1 = new ChallengeInstance();

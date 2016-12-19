@@ -239,7 +239,7 @@ public class SocialControllerUtil {
         model.addAttribute("currentData", data);
         model.addAttribute("listOfDefined", userWhichProfileRequested.getChallenges());
         model.addAttribute("listOfAccepted", userWhichProfileRequested.getAcceptedChallenges());
-        System.out.println("HuiNana");
+      
         userWhichProfileRequested.getAcceptedChallenges().forEach((c) -> {
             System.out.println(((ChallengeInstance) c).getName());
         });
