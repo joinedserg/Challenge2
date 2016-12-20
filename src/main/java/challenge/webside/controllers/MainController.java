@@ -35,6 +35,8 @@ public class MainController {
         util.setModel(request, currentUser, model);
         return "main";
     }
+    
+   
      @RequestMapping(value="/main1", produces = "text/plain;charset=UTF-8")
     public String hom(HttpServletRequest request, Principal currentUser, Model model) {
         util.setModel(request, currentUser, model);

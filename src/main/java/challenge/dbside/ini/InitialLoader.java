@@ -90,6 +90,7 @@ public class InitialLoader {
         chalDef1.setImageRef("race.jpg");
         serviceEntityInit.save(chalDef1);
         User user1 = new User();
+        user1.setName("User 1");
         serviceEntityInit.save(user1);
 
         ChallengeDefinition chalDef2 = new ChallengeDefinition();

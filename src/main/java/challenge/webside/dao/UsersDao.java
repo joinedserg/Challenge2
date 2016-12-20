@@ -77,25 +77,28 @@ public class UsersDao {
         chalDef1.setImageRef("race.jpg");
         serviceEntity.save(chalDef1);
         User user = new User();
+        user.setName(profile.getName());
         serviceEntity.save(user);
-        
-        
+
         user.addChallenge(chalDef1);
         serviceEntity.update(user);
 
         ChallengeInstance chalInstance1 = new ChallengeInstance();
         chalInstance1.setName("Instance of SignUpedUser #1");
+        chalInstance1.setParent(chalDef1);
+        
         serviceEntity.save(chalInstance1);
         ChallengeInstance chalUnstance2 = new ChallengeInstance();
         chalUnstance2.setName("Instance of SignUpedUser #");
+        chalUnstance2.setParent(chalDef1);
         serviceEntity.save(chalUnstance2);
 
-       // Set set = new HashSet();
-        //  set.add(chalInstance1);
-        // set.add(chalUnstance2);
+        Set set = new HashSet();
+        set.add(chalInstance1);
+        set.add(chalUnstance2);
 
-        // chalDef1.setChildren(set);
-        //serviceEntity.update(chalDef1);
+        chalDef1.setChildren(set);
+        serviceEntity.update(chalDef1);
         //  chalInstance1.setParent(chalDef1);
         //chalUnstance2.setParent(chalDef1);
         //serviceEntity.update(chalInstance1);
